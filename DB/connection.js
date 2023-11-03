@@ -4,7 +4,7 @@ const pool =new Pool({
     host:'localhost',
     database:'clinic2',
     password:'nnn123nnn',
-    port:8080,
+    port:3000,
     idleTimeoutMillis: 0,
     connectionTimeoutMillis: 0
   
