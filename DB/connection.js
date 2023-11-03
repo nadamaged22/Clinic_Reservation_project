@@ -5,6 +5,8 @@ const pool =new Pool({
     database:'clinic2',
     password:'nnn123nnn',
     port:3000,
+    idleTimeoutMillis: 0,
+    connectionTimeoutMillis: 0
   
 })
 pool.on("connect", () => {
