@@ -1,6 +1,6 @@
 const jwt =require("jsonwebtoken");
-const pool = require("../../../../DB/connection");
-const queries =require('../auth.queries');
+const pool = require("../../DB/connection");
+const queries =require('../module/auth/auth.queries');
 const util = require('util');
 const queryPromise = util.promisify(pool.query).bind(pool);
 
