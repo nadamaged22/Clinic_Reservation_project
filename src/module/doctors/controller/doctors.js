@@ -15,9 +15,6 @@ const getAllDoctors=asyncHandler(async(req,res,next)=>{
     };
   });
   res.status(200).json({ message: "DONE", Doctors: modifiedDoctors });
-    // const Doctors=result.rows
-    // res.status(200).json({message:"DONE",Doctors})
-
 })
 
 module.exports={
