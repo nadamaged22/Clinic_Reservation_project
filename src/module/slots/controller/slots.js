@@ -5,9 +5,6 @@ const { Pool } = require("pg")
 const queries =require('../slots.queries');
 const queryPromise = util.promisify(pool.query).bind(pool);
 
-
-
-
 const addslot=asyncHandler(async(req,res,next)=>{
     const CheckUserExist=await queryPromise(queries.CheckUserId,[req.user.id])
     const usernotfound=!CheckUserExist.rows.length
@@ -21,6 +18,14 @@ const addslot=asyncHandler(async(req,res,next)=>{
     const slot = result.rows[0]
     res.status(201).json({message:"SLOT ADDRD SUCCES!",slot})
 })
+
+const getSlotsByDRId=asyncHandler(async(req,res,next)=>{
+    
+})
+
+
+
+
 module.exports={
     addslot
 }
