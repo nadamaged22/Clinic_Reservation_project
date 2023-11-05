@@ -7,7 +7,7 @@ const queryPromise = util.promisify(pool.query).bind(pool);
 
 const getAllDoctors=asyncHandler(async(req,res,next)=>{
     const result=await queryPromise(queries.getAllDoctors)
-    const Doctors=result.rows[0]
+    const Doctors=result.rows
     res.status(200).json({message:"DONE",Doctors})
 
 })
