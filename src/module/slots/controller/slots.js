@@ -14,8 +14,8 @@ const addslot=asyncHandler(async(req,res,next)=>{
     if(usernotfound){
         return next (new Error("THIS USER IS NOT EXIST!",{cause:404}))
     }
-    const{date,time}=req.body
-    const result=await queryPromise(queries.addslot,[req.user.id,date,time]);
+    const{date,hour}=req.body
+    const result=await queryPromise(queries.addslot,[req.user.id,date,hour]);
     const slot=result.rows[0]
     res.status(201).json({message:"SLOT ADDRD SUCCES!",slot})
 })
