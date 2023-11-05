@@ -5,6 +5,7 @@ const { auth } = require("../../Midleware/auth");
 const router = Router()
 
 router.post('/addslot',auth(endpoints.slotsCrud),pc.addslot)
+router.get('/drslots/:id',auth(endpoints.AvalibleSlots),pc.getSlotsByDRId)
 
 
 module.exports=router

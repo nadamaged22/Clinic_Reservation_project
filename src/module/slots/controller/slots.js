@@ -21,12 +21,16 @@ const addslot=asyncHandler(async(req,res,next)=>{
 
 const getSlotsByDRId=asyncHandler(async(req,res,next)=>{
     const id=parseInt(req.params.id)
-    const CheckUserExist=await queryPromise(queries.CheckUserId,[id])
+    const CheckUserExist=await queryPromise(queries.checkDrId,[id])
     const usernotfound=!CheckUserExist.rows.length
     if(usernotfound){
         return next (new Error("THIS DOCTOR IS NOT EXIST!",{cause:404}))
     }
-    
+    const result=await queryPromise(queries.getSlotsByDRId,[id])
+    const AvaliableSlots=result.rows
+    res.status(200).json({message:"DONE",AvaliableSlots})
+
+
 
 })
 
@@ -34,5 +38,6 @@ const getSlotsByDRId=asyncHandler(async(req,res,next)=>{
 
 
 module.exports={
-    addslot
+    addslot,
+    getSlotsByDRId
 }
