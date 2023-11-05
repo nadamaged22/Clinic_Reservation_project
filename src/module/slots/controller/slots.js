@@ -20,7 +20,14 @@ const addslot=asyncHandler(async(req,res,next)=>{
 })
 
 const getSlotsByDRId=asyncHandler(async(req,res,next)=>{
+    const id=parseInt(req.params.id)
+    const CheckUserExist=await queryPromise(queries.CheckUserId,[id])
+    const usernotfound=!CheckUserExist.rows.length
+    if(usernotfound){
+        return next (new Error("THIS DOCTOR IS NOT EXIST!",{cause:404}))
+    }
     
+
 })
 
 
