@@ -15,7 +15,7 @@ const auth = (roles=[])=>{
    return  async (req, res, next) => {
         try {
             const { authorization } = req.headers;
-            if (!authorization?.startsWith(process.env.BEARER_KEY)) {
+            if (!authorization?.startsWith("Hamada__")) {
                 return res.json({ message: "In-valid bearer key" })
             }
             const token = authorization.split(process.env.BEARER_KEY)[1]
