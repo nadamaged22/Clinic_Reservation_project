@@ -19,7 +19,7 @@ const addslot=asyncHandler(async(req,res,next)=>{
     const Doctorid=await queryPromise(queries.DoctorID,[req.user.id])
     const doctorIdValue = Doctorid.rows[0].doctor_id;
     const result=await queryPromise(queries.addslot,[doctorIdValue,date,hour]);
-    const slot=result.rows[0]
+    const slot = result.rows[0]
     res.status(201).json({message:"SLOT ADDRD SUCCES!",slot})
 })
 module.exports={
