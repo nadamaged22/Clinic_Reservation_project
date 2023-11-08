@@ -7,6 +7,7 @@ const initApp = (app, express) => {
     app.use('/user',UserRouter)
     app.use('/slot',SlotRouter)
     app.use('/doctor',DoctorRouter)
+    
 
     app.all('*', (req, res, next) => {
         res.send("In-valid Routing Plz check url  or  method")
