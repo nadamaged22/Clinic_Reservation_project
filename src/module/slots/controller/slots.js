@@ -14,6 +14,10 @@ const addslot=asyncHandler(async(req,res,next)=>{
     const{date,hour}=req.body
     const Doctorid=await queryPromise(queries.DoctorID,[req.user.id])
     const doctorIdValue = Doctorid.rows[0].doctor_id;
+    const checkSelectedSlots=await queryPromise(queries.checkSelectedSlots,[req.user.id])
+    if(checkSelectedSlots){
+        return next(new Error("YOU ALREADY CHOOSE THIS SLOT!",{cause:409}))
+    }
     const result=await queryPromise(queries.addslot,[doctorIdValue,date,hour]);
     const slot = result.rows[0]
     res.status(201).json({message:"SLOT ADDRD SUCCES!",slot})
