@@ -47,7 +47,7 @@ const SignUp = asyncHandler(async (req, res, next) => {
     } finally {
         if (client) {
             client.release(); // Release the client back to the pool
-            await client.end()
+            // await client.end()
         }
     }
 });
