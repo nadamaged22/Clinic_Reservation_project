@@ -68,7 +68,8 @@ const Login=asyncHandler(async(req,res,next)=>{
     }
     const payload={
         id:user.id,
-        email:user.email
+        email:user.email,
+        role:user.role
     }
     const token=generateToken({payload})
     res.status(200).json({message:"SIGN IN SUCCESS!",token})
