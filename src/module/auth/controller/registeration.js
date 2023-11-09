@@ -8,48 +8,48 @@ const { generateToken } = require("../../../../utils/GenerateandVerify");
 // const { createHtml, sendEmail } = require("../../../../utils/email");
 const queryPromise = util.promisify(pool.query).bind(pool);
 
-// const SignUp=asyncHandler(async(req,res,next)=>{
-//     const{name,email,role}=req.body
-//     //check the existance of the email
-//         const results = await queryPromise(queries.CheckEmailExist, [email]);
-
-//         if (results.rows.length) {
-//             return next(new Error(`THIS EMAIL '${email}' ALREADY EXIST!`, { cause: 409 }));
-//         } else {
-//             req.body.password = hash(req.body.password);
-//             await queryPromise(queries.adduser, [name, email, req.body.password, role]);
-
-//             res.status(201).json({ message: "SIGNUP SUCCESS!" });
-//         }
-    
-// });
-
-const SignUp = asyncHandler(async (req, res, next) => {
-    let client; // Declare client variable
-
-    try {
-        client = await pool.connect(); // Acquire a client from the pool
-
-        const { name, email, role } = req.body;
-        // Check the existence of the email
-        const results = await client.query(queries.CheckEmailExist, [email]);
+const SignUp=asyncHandler(async(req,res,next)=>{
+    const{name,email,role}=req.body
+    //check the existance of the email
+        const results = await queryPromise(queries.CheckEmailExist, [email]);
 
         if (results.rows.length) {
-            return next(new Error(`THIS EMAIL '${email}' ALREADY EXISTS!`, { cause: 409 }));
+            return next(new Error(`THIS EMAIL '${email}' ALREADY EXIST!`, { cause: 409 }));
         } else {
             req.body.password = hash(req.body.password);
-            await client.query(queries.adduser, [name, email, req.body.password, role]);
+            await queryPromise(queries.adduser, [name, email, req.body.password, role]);
 
             res.status(201).json({ message: "SIGNUP SUCCESS!" });
         }
-    } catch (error) {
-        next(error);
-    } finally {
-        if (client) {
-            client.release(); // Release the client back to the pool
-        }
-    }
+    
 });
+
+// const SignUp = asyncHandler(async (req, res, next) => {
+//     let client; // Declare client variable
+
+//     try {
+//         client = await pool.connect(); // Acquire a client from the pool
+
+//         const { name, email, role } = req.body;
+//         // Check the existence of the email
+//         const results = await client.query(queries.CheckEmailExist, [email]);
+
+//         if (results.rows.length) {
+//             return next(new Error(`THIS EMAIL '${email}' ALREADY EXISTS!`, { cause: 409 }));
+//         } else {
+//             req.body.password = hash(req.body.password);
+//             await client.query(queries.adduser, [name, email, req.body.password, role]);
+
+//             res.status(201).json({ message: "SIGNUP SUCCESS!" });
+//         }
+//     } catch (error) {
+//         next(error);
+//     } finally {
+//         if (client) {
+//             client.release(); // Release the client back to the pool
+//         }
+//     }
+// });
 
 const Login=asyncHandler(async(req,res,next)=>{
     const{email,password}=req.body
