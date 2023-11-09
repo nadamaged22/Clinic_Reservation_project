@@ -66,13 +66,14 @@ const Login=asyncHandler(async(req,res,next)=>{
     if(!match){
         return next(new Error("IN_VALID USER INFO!"),{cause:400})
     }
+    const role=user.role
     const payload={
         id:user.id,
         email:user.email,
         role:user.role
     }
     const token=generateToken({payload})
-    res.status(200).json({message:"SIGN IN SUCCESS!",token})
+    res.status(200).json({message:"SIGN IN SUCCESS!",role,token})
 
 
 
