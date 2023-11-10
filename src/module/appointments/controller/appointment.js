@@ -6,7 +6,7 @@ const CreateAppointment=asyncHandler(async(req,res,next)=>{
     let client
     try{
         client=await pool.connect()
-        const SlotID=parent(req.params.SlotID)
+        const SlotID=parseInt(req.params.SlotID)
 
         const CreateAppointment=await client.query(queries.CreateAppointment,[SlotID,req.user.id])
         const appointment = CreateAppointment.rows[0]
