@@ -11,6 +11,7 @@ const CreateAppointment=asyncHandler(async(req,res,next)=>{
         const CreateAppointment=await client.query(queries.CreateAppointment,[SlotID,req.user.id])
         const appointment = CreateAppointment.rows[0]
         res.status(201).json({message:"YOUR APPOINTMENT RESERVED SUCCESSFULLY!",appointment})
+       
     }catch (error) {
         next(error);
     } finally {
@@ -19,8 +20,9 @@ const CreateAppointment=asyncHandler(async(req,res,next)=>{
             // await client.end()
         }
     }
+
 })
 
 module.exports={
-    CreateAppointment
+    CreateAppointment,
 }
