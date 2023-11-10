@@ -1,4 +1,4 @@
-const CreateAppointment="INSERT INTO appointments (appointment_date, appointment_time, doctor_id, schedule_id)SELECT s.date, s.hour, $1 AS doctor_id, $2 AS schedule_id FROM schedules s WHERE s.schedule_id = $2";
+const CreateAppointment="INSERT INTO appointments (appointment_date, appointment_time, doctor_id, schedule_id, patient_id) SELECT s.date, s.hour, s.doctor_id, $1 AS schedule_id ,u.id AS patient_id FROM schedules s JOIN user u ON u.role = 'Patient' WHERE s.schedule_id = $1 AND u.id= $2";
 
 
 module.exports={
