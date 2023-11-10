@@ -26,7 +26,7 @@ const ShowAppointment=asyncHandler(async(req,res,next)=>{
     try{
         client=await pool.connect()
         const ShowAppointment=await client.query(queries.ShowAppointment,[req.user.id])
-        const Appointments=ShowAppointment.rows
+        const Appointments=ShowAppointment.rows[0]
         res.status(200).json({message:"DONE",Appointments})
        
     }catch (error) {
