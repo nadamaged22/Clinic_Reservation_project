@@ -5,8 +5,9 @@ const pool =new Pool({
     user:process.env.POSTGRESQL_ADDON_USER,
     port:process.env.POSTGRESQL_ADDON_PORT,
     password:process.env.POSTGRESQL_ADDON_PASSWORD,
-    idleTimeoutMillis: 0,
-    connectionTimeoutMillis: 0
+    max: 20, // Set the maximum number of clients in the pool
+    idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
+    connectionTimeoutMillis: 2000,
   
 })
 pool.on("connect", () => {
