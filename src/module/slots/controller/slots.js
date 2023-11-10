@@ -3,7 +3,6 @@ const util = require('util');
 const pool = require("../../../../DB/connection");
 const { Pool } = require("pg")
 const queries =require('../slots.queries');
-const { count } = require("console");
 const queryPromise = util.promisify(pool.query).bind(pool);
 
 const addslot=asyncHandler(async(req,res,next)=>{
