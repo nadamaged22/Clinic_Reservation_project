@@ -8,22 +8,6 @@ const { generateToken } = require("../../../../utils/GenerateandVerify");
 // const { createHtml, sendEmail } = require("../../../../utils/email");
 const queryPromise = util.promisify(pool.query).bind(pool);
 
-// const SignUp=asyncHandler(async(req,res,next)=>{
-//     const{name,email,role}=req.body
-//     //check the existance of the email
-//         const results = await queryPromise(queries.CheckEmailExist, [email]);
-
-//         if (results.rows.length) {
-//             return next(new Error(`THIS EMAIL '${email}' ALREADY EXIST!`, { cause: 409 }));
-//         } else {
-//             req.body.password = hash(req.body.password);
-//             await queryPromise(queries.adduser, [name, email, req.body.password, role]);
-
-//             res.status(201).json({ message: "SIGNUP SUCCESS!" });
-//         }
-    
-// });
-
 const SignUp = asyncHandler(async (req, res, next) => {
     let client; // Declare client variable
 

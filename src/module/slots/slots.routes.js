@@ -6,6 +6,7 @@ const router = Router()
 
 router.post('/addslot',auth(endpoints.slotsCrud),pc.addslot)
 router.get('/drslots/:id',auth(endpoints.AvalibleSlots),pc.getSlotsByDRId)
+router.get('/showslots',auth(endpoints.slotsCrud),pc.getDrSlots)
 
 
 module.exports=router

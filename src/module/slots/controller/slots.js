@@ -20,7 +20,7 @@ const addslot=asyncHandler(async(req,res,next)=>{
         const doctorIdValue = Doctorid.rows[0].doctor_id;
         const checkSelectedSlots=await client.query(queries.checkSelectedSlots,[doctorIdValue,date,hour])
         if(checkSelectedSlots.rows.length){
-            return next(new Error("YOU ALREADY CHOSE THIS SLOT!", { cause: 409 }));
+            return next(new Error("YOU ALREADY CHOSE THIS SLOT!",{cause:409}));
         }else{
             const result=await client.query(queries.addslot,[doctorIdValue,date,hour]);
         const slot = result.rows[0]
@@ -35,10 +35,6 @@ const addslot=asyncHandler(async(req,res,next)=>{
             // await client.end()
         }
     }
-    
-
-
-
 });
 const getSlotsByDRId=asyncHandler(async(req,res,next)=>{
     let client;
@@ -62,8 +58,27 @@ const getSlotsByDRId=asyncHandler(async(req,res,next)=>{
         }
     }
 })
+const getDrSlots=asyncHandler(async(req,res,next)=>{
+    let client;
+    try{
+        client=await pool.connect()
+        const Doctorid=await client.query(queries.DoctorID,[req.user.id])
+        const doctorIdValue = Doctorid.rows[0].doctor_id;
+        const result=await client.query(queries.getSlotsByDRId,[doctorIdValue])
+        const slots=result.rows
+        res.status(200).json({message:"DONE",slots})
+    }catch (error) {
+        next(error);
+    } finally {
+        if (client) {
+            client.release(); // Release the client back to the pool
+            // await client.end()
+        }
+    }
+})
 
 module.exports={
     addslot,
-    getSlotsByDRId
+    getSlotsByDRId,
+    getDrSlots
 }
