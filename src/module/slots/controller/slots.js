@@ -3,6 +3,7 @@ const util = require('util');
 const pool = require("../../../../DB/connection");
 const { Pool } = require("pg")
 const queries =require('../slots.queries');
+const { count } = require("console");
 const queryPromise = util.promisify(pool.query).bind(pool);
 
 const addslot=asyncHandler(async(req,res,next)=>{
@@ -18,6 +19,7 @@ const addslot=asyncHandler(async(req,res,next)=>{
         const Doctorid=await client.query(queries.DoctorID,[req.user.id])
         const doctorIdValue = Doctorid.rows[0].doctor_id;
         const checkSelectedSlots=await client.query(queries.getSlotsByDRId,[req.user.id])
+        console.log(checkSelectedSlots)
         checkSelectedSlots.rows.forEach(row => {
             if(row.date === date && row.hour === hour && row.doctor_id=== req.user.id){
                 return next(new Error("YOU ALREADY CHOSE THIS SLOT!", { cause: 409 }));
@@ -32,7 +34,7 @@ const addslot=asyncHandler(async(req,res,next)=>{
     } finally {
         if (client) {
             client.release(); // Release the client back to the pool
-            await client.end()
+            // await client.end()
         }
     }
     
