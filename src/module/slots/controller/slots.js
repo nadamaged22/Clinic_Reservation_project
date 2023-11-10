@@ -18,7 +18,7 @@ const addslot=asyncHandler(async(req,res,next)=>{
         const{date,hour}=req.body
         const Doctorid=await client.query(queries.DoctorID,[req.user.id])
         const doctorIdValue = Doctorid.rows[0].doctor_id;
-        const checkSelectedSlots=await client.query(queries.checkSelectedSlots,[req.user.id])
+        const checkSelectedSlots=await client.query(queries.checkSelectedSlots,[doctorIdValue])
         if(checkSelectedSlots.rows.length){
             return next(new Error("YOU ALREADY CHOSE THIS SLOT!", { cause: 409 }));
         }else{
