@@ -18,17 +18,23 @@ const addslot=asyncHandler(async(req,res,next)=>{
         const{date,hour}=req.body
         const Doctorid=await client.query(queries.DoctorID,[req.user.id])
         const doctorIdValue = Doctorid.rows[0].doctor_id;
-        const checkSelectedSlots=await client.query(queries.getSlotsByDRId,[req.user.id])
-        console.log(checkSelectedSlots)
-        checkSelectedSlots.rows.forEach(row => {
-            console.log(row.date,row.hour , row.doctor_id)
-            if(row.date === date && row.hour === hour && row.doctor_id=== req.user.id){
-                return next(new Error("YOU ALREADY CHOSE THIS SLOT!", { cause: 409 }));
-            }
-        });
-        const result=await client.query(queries.addslot,[doctorIdValue,date,hour]);
+        const checkSelectedSlots=await client.query(queries.checkSelectedSlots,[req.user.id])
+        if(checkSelectedSlots.rows.length){
+            return next(new Error("YOU ALREADY CHOSE THIS SLOT!", { cause: 409 }));
+        }else{
+            const result=await client.query(queries.addslot,[doctorIdValue,date,hour]);
         const slot = result.rows[0]
         res.status(201).json({message:"SLOT ADDED SUCCES!",slot})
+
+        }
+        // // console.log(checkSelectedSlots)
+        // checkSelectedSlots.rows.forEach(row => {
+        //     console.log(row.date,row.hour , row.doctor_id)
+        //     if(row.date === date && row.hour === hour && row.doctor_id=== req.user.id){
+        //         return next(new Error("YOU ALREADY CHOSE THIS SLOT!", { cause: 409 }));
+        //     }
+        // });
+        
        
     }catch (error) {
         next(error);
