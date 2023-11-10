@@ -6,6 +6,9 @@ const queries =require('../doctors.queries');
 const queryPromise = util.promisify(pool.query).bind(pool);
 
 const getAllDoctors=asyncHandler(async(req,res,next)=>{
+  let client;
+  try{
+    
     const result=await queryPromise(queries.getAllDoctors)
     //do this to retrive all the doctors name with dr before the name
    const modifiedDoctors = result.rows.map(doctor => {
@@ -15,6 +18,14 @@ const getAllDoctors=asyncHandler(async(req,res,next)=>{
     };
   });
   res.status(200).json({ message: "DONE", Doctors: modifiedDoctors });
+  }catch (error) {
+    next(error);
+} finally {
+    if (client) {
+        client.release(); // Release the client back to the pool
+        // await client.end()
+    }
+}
 })
 
 module.exports={
