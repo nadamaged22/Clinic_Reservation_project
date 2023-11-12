@@ -38,6 +38,25 @@ const ShowAppointment=asyncHandler(async(req,res,next)=>{
         }
     }
 })
+const EditAppointment=asyncHandler(async(req,res,next)=>{
+    let client
+    try{
+        client=await pool.connect()
+        const SlotID=parseInt(req.params.SlotID)
+        const DoctorID=parseInt(req.params.DoctorID)
+        const appointmentID=parseInt(req.params.appointmentID)
+        const EditAppointment=await client.query(queries.EditAppointment,[DoctorID,SlotID,appointmentID,req.user.id])
+        updatedAppointments=EditAppointment.rows
+        res.status(200).json({message:"DONE",updatedAppointments})  
+    }catch (error) {
+        next(error);
+    } finally {
+        if (client) {
+            client.release(); // Release the client back to the pool
+            // await client.end()
+        }
+    }
+})
 
 module.exports={
     CreateAppointment,
