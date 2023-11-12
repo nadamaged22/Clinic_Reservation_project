@@ -47,7 +47,7 @@ const EditAppointment=asyncHandler(async(req,res,next)=>{
         const appointmentID=parseInt(req.params.appointmentID)
         const EditAppointment=await client.query(queries.EditAppointment,[DoctorID,SlotID,appointmentID,req.user.id])
         updatedAppointments=EditAppointment.rows
-        console.log('SQL Query:', queries.EditAppointment);
+        console.log('SQL Query:', queries.EditAppointment,[DoctorID,SlotID,appointmentID,req.user.id]);
         res.status(200).json({message:"DONE",updatedAppointments})  
     }catch (error) {
         next(error);
