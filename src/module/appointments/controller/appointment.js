@@ -60,5 +60,6 @@ const EditAppointment=asyncHandler(async(req,res,next)=>{
 
 module.exports={
     CreateAppointment,
-    ShowAppointment
+    ShowAppointment,
+    EditAppointment
 }
